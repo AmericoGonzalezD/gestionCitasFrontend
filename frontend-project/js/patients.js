@@ -33,8 +33,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 <td>${patient.edad}</td>
                 <td>${patient.sexo}</td>
                 <td>
-                    <button class="btn btn-warning" onclick="editPatient(${patient.idUsuario})">Edit</button>
-                    <button class="btn btn-danger" onclick="deletePatient(${patient.idUsuario})">Delete</button>
+                    <button class="btn btn-primary btn-edit" onclick="editPatient(${patient.idUsuario})">Editar</button>
+                    <button class="btn btn-danger" onclick="deletePatient(${patient.idUsuario})">Eliminar</button>
                 </td>
             `;
             patientsTableBody.appendChild(row);
@@ -99,7 +99,64 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .catch(error => console.error('Error deleting patient:', error));
     };
-    
+    const createUserBtn = document.getElementById("createUserBtn");
+
+    createUserBtn.addEventListener("click", function () {
+        // Obtener los datos del formulario
+        const nombre = document.getElementById("nombre").value;
+        const correo = document.getElementById("correo").value;
+        const telefono = document.getElementById("telefono").value;
+        const edad = document.getElementById("edad").value;
+        const sexo = document.getElementById("sexo").value;
+        const password = document.getElementById("password").value;
+        const rol = document.getElementById("rol").value;
+        const estadoCivil = document.getElementById("estadoCivil").value;
+        const direccion = document.getElementById("direccion").value;
+
+        // Validar que todos los campos estén completos
+        if (!nombre || !correo || !telefono || !edad || !sexo || !password || !rol || !estadoCivil || !direccion) {
+            alert("Please fill in all fields.");
+            return;
+        }
+
+        // Crear el cuerpo de la solicitud
+        const userData = {
+            nombre,
+            correo,
+            telefono,
+            edad,
+            sexo,
+            password,
+            rol
+        };
+
+        // Llamada a la API para crear el usuario
+        fetch(`http://localhost:8080/api/usuario?estadoCivil=${estadoCivil}&direccion=${direccion}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(userData),
+        })
+        .then(response => {
+            if (response.ok) {
+                alert("User created successfully!");
+                fetchPatients();
+                $('#createUserModal').modal('hide'); // Cerrar el modal
+                 // Actualizar la tabla con los nuevos datos
+            } else if (response.status === 409) {
+                return response.json().then(errorData => {
+                    alert(errorData.error); // Muestra el mensaje de error personalizado
+                });
+            } else {
+                alert("Error creating user.");
+            }
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            alert("Error creating user.");
+        });
+    });
     
 
     // Cargar pacientes al inicio
