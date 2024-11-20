@@ -409,7 +409,7 @@ function fetchClients() {
         })
         .catch(error => console.error("Error al cargar clientes:", error));
 }
-    
+   
     // Cargar datos iniciales
     fetchAppointments();
     fetchPsychologists();
