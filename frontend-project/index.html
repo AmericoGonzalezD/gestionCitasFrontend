@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestión de Citas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Sistema de Gestión de Citas</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="specialties.html">Especialidades</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="patients.html">Pacientes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="login.html">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <!-- Botón para abrir el modal de crear cita -->
+        <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#createModal">Crear Cita</button>
+        <h2>Citas</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nombre de cliente</th>
+                    <th>Psicólogo</th>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="appointmentsTable">
+                <!-- Aquí se llenarán las citas mediante JavaScript -->
+            </tbody>
+        </table>
+
+    
+    </div>
+
+    <!-- Modal para crear cita -->
+    <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createModalLabel">Crear Cita</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="createCitaForm">
+                        <div class="mb-3">
+                            <label for="idCliente" class="form-label">Cliente</label>
+                            <select id="idCliente" class="form-select">
+                                <option value="">Seleccionar Cliente</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="idPsicologo" class="form-label">Psicólogo</label>
+                            <select id="idPsicologo" class="form-select">
+                                <option value="">Seleccionar Psicólogo</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="fecha" class="form-label">Fecha</label>
+                            <input type="date" id="fecha" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label for="hora" class="form-label">Hora</label>
+                            <input type="time" id="hora" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label for="estado" class="form-label">Estado</label>
+                            <input type="text" id="estado" class="form-control">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Crear Cita</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- Modal Editar Cita -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Editar Cita</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editAppointmentForm">
+                    <div class="mb-3">
+                        <label for="editClientId" class="form-label">Nombre del cliente</label>
+                        <input type="text" class="form-control" id="editClientId" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editIdPsicologo" class="form-label">Psicólogo</label>
+                        <select id="editIdPsicologo" class="form-select">
+                            <option value="">Seleccionar Psicólogo</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editAppointmentDate" class="form-label">Fecha</label>
+                        <input type="date" id="editAppointmentDate" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="editAppointmentTime" class="form-label">Hora</label>
+                        <input type="time" id="editAppointmentTime" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="editAppointmentStatus" class="form-label">Estado</label>
+                        <input type="text" id="editAppointmentStatus" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+  
+
+    <!-- Scripts de jQuery y Bootstrap -->
+    <!-- Scripts de Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/index.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</body>
+</html>

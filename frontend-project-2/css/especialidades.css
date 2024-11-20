@@ -1,0 +1,36 @@
+/* This file contains custom styles specific to the Especialidades page. */
+
+body {
+    background-color: #f8f9fa;
+}
+
+h1 {
+    color: #343a40;
+    margin-bottom: 20px;
+}
+
+.table {
+    margin-top: 20px;
+}
+
+.table th {
+    background-color: #007bff;
+    color: white;
+}
+
+.table td {
+    vertical-align: middle;
+}
+
+.btn-custom {
+    background-color: #28a745;
+    color: white;
+}
+
+.btn-custom:hover {
+    background-color: #218838;
+}
+
+.alert {
+    margin-top: 20px;
+}

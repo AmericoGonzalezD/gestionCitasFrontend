@@ -1,0 +1,31 @@
+/* Styles for the Login page */
+
+body {
+    background-color: #f8f9fa;
+}
+
+.login-container {
+    max-width: 400px;
+    margin: auto;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-container h2 {
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.login-container .form-group {
+    margin-bottom: 1rem;
+}
+
+.login-container .btn {
+    width: 100%;
+}
+
+.alert {
+    margin-top: 1rem;
+}
