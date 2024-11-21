@@ -4,11 +4,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const patientNameInput = document.getElementById('patientName');
     const patientEmailInput = document.getElementById('patientEmail');
     const patientPhoneInput = document.getElementById('patientPhone');
-    const patientAddressInput = document.getElementById('patientAddress');
-    const patientCivilStatusInput = document.getElementById('patientCivilStatus');
     const editModal = document.getElementById('editModal');
+    const createModal = document.getElementById('createModal');
+    const newPatientNameInput = document.getElementById('newPatientName');
+    const newPatientEmailInput = document.getElementById('newPatientEmail');
+    const newPatientPhoneInput = document.getElementById('newPatientPhone');
     let patients = [];
-
     // Obtener pacientes
     function fetchPatients() {
         fetch('http://localhost:8080/usuarios/clientes')
@@ -41,31 +42,102 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Editar paciente
-    window.editPatient = function(id) {
-        const patient = patients.find(p => p.idUsuario === id);
+    // Crear paciente
+    /*window.createPatient = function() {
+        const newPatient = {
+            nombre: newPatientNameInput.value,
+            correo: newPatientEmailInput.value,
+            telefono: newPatientPhoneInput.value
+        };
+
+        // Validación del teléfono
+        const phoneRegex = /^[0-9]{10}$/;
+        if (!phoneRegex.test(newPatient.telefono)) {
+            alert('El número de teléfono debe tener exactamente 10 dígitos.');
+            return;
+        }
+
+        fetch('http://localhost:8080/usuarios/clientes', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newPatient)
+        })
+        .then(response => {
+            if (response.ok) {
+                fetchPatients(); // Recargar la lista de pacientes después de crear uno
+                $(createModal).modal('hide'); // Cerrar el modal
+            } else {
+                console.error('Error creating patient:', response.statusText);
+            }
+        })
+        .catch(error => console.error('Error creating patient:', error));
+    };*/
+    // Crear paciente
+    window.createPatient = function() {
+        const newPatient = {
+            nombre: newPatientNameInput.value,
+            correo: newPatientEmailInput.value,
+            telefono: newPatientPhoneInput.value
+        };
+
+        const phoneRegex = /^[0-9]{10}$/;
+        if (!phoneRegex.test(patientPhoneInput.value)) {
+            alert('El número de teléfono debe tener exactamente 10 dígitos.');
+            return;
+        }
+
+        fetch('http://localhost:8080/usuarios/clientes', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newPatient)
+        })
+        .then(response => {
+            if (response.ok) {
+                fetchPatients(); // Recargar la lista de pacientes después de crear uno
+                $(createModal).modal('hide'); // Cerrar el modal
+            } else {
+                console.error('Error creating patient:', response.statusText);
+            }
+        })
+        .catch(error => console.error('Error creating patient:', error));
+    };
+
+// Editar paciente
+window.editPatient = function(id) {
+    const patient = patients.find(p => p.idUsuario === id);
+    if (patient) {
+        // Cargar los valores actuales del paciente en los campos del formulario
         patientNameInput.value = patient.nombre;
         patientEmailInput.value = patient.correo;
         patientPhoneInput.value = patient.telefono;
-        patientAddressInput.value = patient.direccion;
-        patientCivilStatusInput.value = patient.estadoCivil;
 
+        // Mostrar el modal
         $(editModal).modal('show');
-        editPatientForm.onsubmit = function(event) {
-            event.preventDefault();
-            updatePatient(id);
-        };
-    };
 
-    // Actualizar paciente
-    function updatePatient(id) {
+        // Hacer que el botón de guardar actualice los datos
+        const saveButton = document.getElementById('savePatientBtn');
+        saveButton.onclick = function() {
+            const phoneRegex = /^[0-9]{10}$/;
+            if (!phoneRegex.test(patientPhoneInput.value)) {
+                alert('El número de teléfono debe tener exactamente 10 dígitos.');
+                return;
+            }
+            updatePatient(id);// Llamar a la función para actualizar al paciente
+        };
+    }
+};
+
+     // Actualizar paciente
+     function updatePatient(id) {
         const updatedPatient = {
             correo: patientEmailInput.value,
-            telefono: patientPhoneInput.value,
-            direccion: patientAddressInput.value,
-            estadoCivil: patientCivilStatusInput.value
+            telefono: patientPhoneInput.value
         };
-        
+
         fetch(`http://localhost:8080/usuarios/${id}`, {
             method: 'PUT',
             headers: {
@@ -75,14 +147,15 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(response => {
             if (response.ok) {
-                fetchPatients();
-                $(editModal).modal('hide');
+                fetchPatients(); // Recargar la lista de pacientes después de la actualización
+                $(editModal).modal('hide'); // Cerrar el modal
             } else {
                 console.error('Error updating patient:', response.statusText);
             }
         })
         .catch(error => console.error('Error updating patient:', error));
     }
+
 
     // Eliminar paciente
     window.deletePatient = function(id) {
@@ -116,6 +189,27 @@ document.addEventListener('DOMContentLoaded', function() {
         // Validar que todos los campos estén completos
         if (!nombre || !correo || !telefono || !edad || !sexo || !password || !rol || !estadoCivil || !direccion) {
             alert("Please fill in all fields.");
+            return;
+        }
+                // Validar que el nombre y estado civil solo contengan texto
+                const textRegex = /^[a-zA-Z\s]+$/;
+                if (!textRegex.test(nombre)) {
+                    alert('El nombre solo debe contener letras.');
+                    return;
+                }
+                if (!textRegex.test(estadoCivil)) {
+                    alert('El estado civil solo debe contener letras.');
+                    return;
+                }
+        const phoneRegex = /^[0-9]{10}$/;
+        if (!phoneRegex.test(telefono)) {
+            alert('El número de teléfono debe tener exactamente 10 dígitos.');
+            return;
+        }
+        // Validar que el estado civil sea uno de los valores permitidos
+        const validEstadoCivil = ['CASADO', 'SOLTERO', 'DIVORCIADO', 'VIUDO'];
+        if (!validEstadoCivil.includes(estadoCivil.toUpperCase())) {
+            alert('El estado civil debe ser uno de los siguientes: CASADO, SOLTERO, DIVORCIADO, VIUDO.');
             return;
         }
 
