@@ -41,32 +41,34 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.error("Error fetching appointments:", error);
             });
     }
+// Mostrar citas en la tabla
+// Mostrar citas en la tabla
+function displayAppointments(appointments) {
+    appointmentsTable.innerHTML = ""; // Limpiar filas previas
 
-    // Mostrar citas en la tabla
-    function displayAppointments(appointments) {
-        appointmentsTable.innerHTML = ""; // Limpiar filas previas
-
-        if (!data || !data.citas || data.citas.length === 0) {
-            appointmentsTable.innerHTML = "<tr><td colspan='6'>No hay citas agendadas</td></tr>";
-            return;
-        }
-
-        appointments.forEach(appointment => {
-            const row = document.createElement("tr");
-            row.innerHTML = `
-                <td>${appointment.idCita}</td>
-                <td>${appointment.clienteNombre}</td>
-                <td>${appointment.psicologoNombre}</td>
-                <td>${appointment.fecha}</td>
-                <td>${appointment.hora}</td>
-                <td>${appointment.estado.trim()}</td>
-                <td>
-                    <button class="btn btn-danger" onclick="deleteAppointment(${appointment.idCita})">Eliminar cita</button>
-                </td>
-            `;
-            appointmentsTable.appendChild(row);
-        });
+    if (!appointments || appointments.length === 0) {
+        appointmentsTable.innerHTML = "<tr><td colspan='6'>No hay citas agendadas</td></tr>";
+        return;
     }
+
+    appointments.forEach(appointment => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${appointment.idCita}</td>
+            <td>${appointment.clienteNombre}</td>
+            <td>${appointment.psicologoNombre}</td>
+            <td>${appointment.fecha}</td>
+            <td>${appointment.hora}</td>
+            <td>${appointment.estado.trim()}</td>
+            <td>
+                <button class="btn btn-danger" onclick="deleteAppointment(${appointment.idCita})">Cancelar Cita</button>
+            </td>
+        `;
+        appointmentsTable.appendChild(row);
+    });
+}
+
+
 
     // Función para eliminar una cita
     window.deleteAppointment = function (idCita) {

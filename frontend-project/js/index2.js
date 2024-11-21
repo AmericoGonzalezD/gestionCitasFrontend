@@ -59,6 +59,8 @@ document.getElementById("createCitaForm").addEventListener("submit", function (e
 
 
 createAppointment(idCliente, idPsicologo, fecha, hora, estado);
+const idClientea = document.getElementById("idCliente").value;
+console.log(idClientea);
     function createAppointment(idCliente, idPsicologo, fecha, hora, estado) {
         if (!isValidAppointmentDate(fecha)) {
             console.error("La fecha seleccionada no es válida. No se pueden escoger días anteriores a hoy ni sábados o domingos.");
@@ -90,8 +92,7 @@ createAppointment(idCliente, idPsicologo, fecha, hora, estado);
             })
             .then(message => {
                 alert("Cita creada exitosamente: " + message);
-                const modal = bootstrap.Modal.getInstance(document.getElementById("createModal"));
-                modal.hide();
+                $('#createModal').modal('hide');
                 fetchAppointments(); // Recarga las citas
             })
             .catch(error => {

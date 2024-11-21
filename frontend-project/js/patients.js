@@ -126,6 +126,7 @@ window.editPatient = function(id) {
                 alert('El número de teléfono debe tener exactamente 10 dígitos.');
                 return;
             }
+            console.log(id);
             updatePatient(id);// Llamar a la función para actualizar al paciente
         };
     }
@@ -155,6 +156,7 @@ window.editPatient = function(id) {
         })
         .catch(error => console.error('Error updating patient:', error));
     }
+
 
 
     // Eliminar paciente
@@ -225,7 +227,7 @@ window.editPatient = function(id) {
         };
 
         // Llamada a la API para crear el usuario
-        fetch(`http://localhost:8080/api/usuario?estadoCivil=${estadoCivil}&direccion=${direccion}`, {
+        fetch(`http://localhost:8080/usuarios/editar?estadoCivil=${estadoCivil}&direccion=${direccion}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

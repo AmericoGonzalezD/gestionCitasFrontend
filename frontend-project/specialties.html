@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -73,7 +73,29 @@
                 </div>
             </div>
         </div>
-
+        <!-- Modal para asignar especialidad a psicólogo -->
+        <div class="modal fade" id="assignModal" tabindex="-1" aria-labelledby="assignModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="assignModalLabel">Asignar Especialidad a Psicólogo</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="assignForm">
+                            <div class="mb-3">
+                                <label for="idPsicologo" class="form-label">Seleccionar Psicólogo</label>
+                                <select class="form-select" id="idPsicologo" required>
+                                    <!-- Opciones cargadas dinámicamente -->
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Asignar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <!-- Formulario para agregar una nueva especialidad (modal) -->
         <div class="modal" tabindex="-1" id="addModal">
             <div class="modal-dialog">

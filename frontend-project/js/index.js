@@ -244,7 +244,8 @@
             appointmentDateInput.value = fecha;
             appointmentTimeInput.value = hora;
             appointmentStatusInput.value = estado;
-        
+            
+
             // Cargar psicólogos
             fetchPsychologistsForEdit(idPsicologo);
         
@@ -422,7 +423,13 @@
         // Función para cargar psicólogos
        function fetchPsychologistsForEdit(selectedPsicologoId) {
             const psicologoSelect = document.getElementById("editIdPsicologo");
-
+            if (userId) {
+                psicologoSelect.value = userId; // Asignar el valor del userId
+                psicologoSelect.disabled = true; // Bloquear el campo para que no sea editable
+            } else {
+                console.error("No se encontró el userId en el localStorage.");
+                alert("Error: No se encontró el usuario. Por favor, inicia sesión nuevamente.");
+            }
             
             fetch("http://localhost:8080/psicologo")
                 .then(response => response.json())
