@@ -28,7 +28,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 <td>${specialty.idEspecialidad}</td>
                 <td>${specialty.nombre}</td>
                 <td>
-                    <button class="btn btn-primary" onclick="editSpecialty(${specialty.idEspecialidad})">Edit</button>
+                    <button class="btn btn-primary" onclick="editSpecialty(${specialty.idEspecialidad})">Editar</button>
+                    <button class="btn btn-danger" onclick="deletePatient(${specialty.idEspecialidad})">Eliminar</button>
                 </td>
             `;
             specialtiesTableBody.appendChild(row);
@@ -92,6 +93,27 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         })
         .catch(error => console.error('Error adding specialty:', error));
+    };
+    // Eliminar especialidad mediante DELETE
+    window.deletePatient = function(id) {
+        if (confirm('¿Estás seguro de que deseas eliminar esta especialidad?')) {
+            fetch(`http://localhost:8080/especialidad/${id}`, {
+                method: 'DELETE',
+            })
+            .then(response => {
+                if (response.ok) {
+                    fetchSpecialties(); // Refrescar la lista de especialidades
+                    alert('Especialidad eliminada exitosamente.');
+                } else {
+                    console.error('Error deleting specialty:', response.statusText);
+                    alert('No se pudo eliminar la especialidad. Intente nuevamente.');
+                }
+            })
+            .catch(error => {
+                console.error('Error deleting specialty:', error);
+                alert('Ocurrió un error al intentar eliminar la especialidad.');
+            });
+        }
     };
 
     // Cargar las especialidades al iniciar

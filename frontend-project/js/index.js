@@ -22,7 +22,7 @@
                     appointmentsTable.innerHTML = ""; // Limpiar tabla antes de agregar datos
     
                     if (!data || !data.citas || data.citas.length === 0) {
-                        appointmentsTable.innerHTML = "<tr><td colspan='6'>No hay citas disponibles.</td></tr>";
+                        appointmentsTable.innerHTML = "<tr><td colspan='6'>No hay citas agendadas</td></tr>";
                         return;
                     }
     

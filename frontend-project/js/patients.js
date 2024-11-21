@@ -188,7 +188,7 @@ window.editPatient = function(id) {
 
         // Validar que todos los campos estén completos
         if (!nombre || !correo || !telefono || !edad || !sexo || !password || !rol || !estadoCivil || !direccion) {
-            alert("Please fill in all fields.");
+            alert("Por favor llene todos los campos.");
             return;
         }
                 // Validar que el nombre y estado civil solo contengan texto
@@ -234,7 +234,7 @@ window.editPatient = function(id) {
         })
         .then(response => {
             if (response.ok) {
-                alert("User created successfully!");
+                alert("Usuario creado de manera exitosa.");
                 fetchPatients();
                 $('#createUserModal').modal('hide'); // Cerrar el modal
                  // Actualizar la tabla con los nuevos datos
@@ -248,7 +248,7 @@ window.editPatient = function(id) {
         })
         .catch(error => {
             console.error("Error:", error);
-            alert("Error creating user.");
+            alert("Error al crear usuario. Verifique los datos e intente de nuevo.");
         });
     });
     

@@ -46,8 +46,8 @@ document.addEventListener("DOMContentLoaded", function () {
     function displayAppointments(appointments) {
         appointmentsTable.innerHTML = ""; // Limpiar filas previas
 
-        if (!appointments || appointments.length === 0) {
-            appointmentsTable.innerHTML = "<tr><td colspan='7'>No appointments found.</td></tr>";
+        if (!data || !data.citas || data.citas.length === 0) {
+            appointmentsTable.innerHTML = "<tr><td colspan='6'>No hay citas agendadas</td></tr>";
             return;
         }
 
