@@ -10,6 +10,7 @@
             return;
         }
     
+    
         // Función para obtener y mostrar las citas
         function fetchAppointments() {
             const endpoint = `http://localhost:8080/citas/psicologo?idPsicologo=${userId}`;
@@ -135,6 +136,7 @@
     };*/
 
     /*window.editAppointment = function(id, idPsicologo) {
+
         const clientIdInput = document.getElementById("editClientId");
         const idPsicologoSelect = document.getElementById("editIdPsicologo");
         const appointmentDateInput = document.getElementById("editAppointmentDate");
@@ -223,6 +225,7 @@
         });
     }*/
     
+       
         window.editAppointment = function(id, idPsicologo) {
             const clientIdInput = document.getElementById("editClientId");
             const idPsicologoSelect = document.getElementById("editIdPsicologo");
@@ -280,7 +283,25 @@
                 alert("Por favor, complete todos los campos antes de guardar.");
                 return;
             }
-        
+              // Validar fecha y hora
+            if (!isValidAppointmentDate(updatedAppointment.fecha )) {
+                console.error("La fecha seleccionada no es válida. No se pueden escoger días anteriores a hoy ni sábados o domingos.");
+                alert("La fecha seleccionada no es válida. No se pueden escoger días anteriores a hoy.");
+                return;
+            }
+
+            if (!isValidAppointmentTime(updatedAppointment.hora)) {
+                console.error("La hora seleccionada no es válida. Solo se pueden escoger horarios entre 8 am y 7 pm.");
+                alert("La hora seleccionada no es válida. Solo se pueden escoger horarios entre 8 am y 7 pm.");
+                return;
+            }
+            // Validar estado
+            if (!isValidAppointmentStatus(updatedAppointment.estado)) {
+                console.error("El estado seleccionado no es válido. Solo se permiten 'Pendiente' o 'Completado'.");
+                alert("El estado seleccionado no es válido. Solo se permiten 'Pendiente' o 'Completado'.");
+                return;
+}
+   
             // Verificar URL generada para asegurarse de que los parámetros están siendo enviados correctamente
             const url = `http://localhost:8080/citas/${id}?idPsicologo=${updatedAppointment.idPsicologo}&fecha=${updatedAppointment.fecha}&hora=${updatedAppointment.hora}&estado=${updatedAppointment.estado}`;
             console.log("URL de actualización:", url);
@@ -325,8 +346,38 @@
         }
     }
 
-
-
+    function isValidAppointmentStatus(status) {
+        const validStatuses = ["Pendiente", "Completada"];
+        return validStatuses.includes(status);
+    }
+    
+    function isValidAppointmentTime(time) {
+        const [hours, minutes] = time.split(':').map(Number);
+        const appointmentTime = new Date();
+        appointmentTime.setHours(hours, minutes, 0, 0);
+    
+        const startTime = new Date();
+        startTime.setHours(8, 0, 0, 0);
+    
+        const endTime = new Date();
+        endTime.setHours(19, 0, 0, 0);
+    
+        return appointmentTime >= startTime && appointmentTime <= endTime;
+    }
+    
+    function isValidAppointmentTime(time) {
+        const [hours, minutes] = time.split(':').map(Number);
+        const appointmentTime = new Date();
+        appointmentTime.setHours(hours, minutes, 0, 0);
+    
+        const startTime = new Date();
+        startTime.setHours(8, 0, 0, 0);
+    
+        const endTime = new Date();
+        endTime.setHours(19, 0, 0, 0);
+    
+        return appointmentTime >= startTime && appointmentTime <= endTime;
+    }
         // Función para cargar psicólogos y seleccionar el que corresponde
         /*function fetchPsychologistsForEdit(selectedPsicologoId) {
             const psicologoSelect = document.getElementById("editIdPsicologo");

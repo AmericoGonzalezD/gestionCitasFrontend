@@ -57,9 +57,20 @@ document.getElementById("createCitaForm").addEventListener("submit", function (e
         return;
     }
 
-    createAppointment(idCliente, idPsicologo, fecha, hora, estado);
 
+createAppointment(idCliente, idPsicologo, fecha, hora, estado);
     function createAppointment(idCliente, idPsicologo, fecha, hora, estado) {
+        if (!isValidAppointmentDate(fecha)) {
+            console.error("La fecha seleccionada no es válida. No se pueden escoger días anteriores a hoy ni sábados o domingos.");
+            alert("La fecha seleccionada no es válida. No se pueden escoger días anteriores a hoy");
+            return;
+        }
+    
+        if (!isValidAppointmentTime(hora)) {
+            console.error("La hora seleccionada no es válida. Solo se pueden escoger horarios entre 8 am y 7 pm.");
+            alert("La hora seleccionada no es válida. Solo se pueden escoger horarios entre 8 am y 7 pm.");
+            return;
+        }
         const endpoint = `http://localhost:8080/citas?idCliente=${idCliente}&idPsicologo=${idPsicologo}&fecha=${fecha}&hora=${hora}&estado=${estado}`;
 
         fetch(endpoint, {
@@ -89,6 +100,52 @@ document.getElementById("createCitaForm").addEventListener("submit", function (e
             });
     }
 });
+function isValidAppointmentDate(date) {
+    const appointmentDate = new Date(date);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    // Check if the date is in the past
+    if (appointmentDate < today) {
+        return false;
+    }
+
+    // Check if the date is a Saturday or Sunday
+    const dayOfWeek = appointmentDate.getDay();
+    if (dayOfWeek === 0 || dayOfWeek === 6) {
+        return false;
+    }
+
+    return true;
+}
+
+function isValidAppointmentTime(time) {
+    const [hours, minutes] = time.split(':').map(Number);
+    const appointmentTime = new Date();
+    appointmentTime.setHours(hours, minutes, 0, 0);
+
+    const startTime = new Date();
+    startTime.setHours(8, 0, 0, 0);
+
+    const endTime = new Date();
+    endTime.setHours(19, 0, 0, 0);
+
+    return appointmentTime >= startTime && appointmentTime <= endTime;
+}
+
+function isValidAppointmentTime(time) {
+    const [hours, minutes] = time.split(':').map(Number);
+    const appointmentTime = new Date();
+    appointmentTime.setHours(hours, minutes, 0, 0);
+
+    const startTime = new Date();
+    startTime.setHours(8, 0, 0, 0);
+
+    const endTime = new Date();
+    endTime.setHours(19, 0, 0, 0);
+
+    return appointmentTime >= startTime && appointmentTime <= endTime;
+}
 
 // Función para cargar citas
 function fetchAppointments() {
