@@ -352,19 +352,29 @@
         return validStatuses.includes(status);
     }
     
-    function isValidAppointmentTime(time) {
-        const [hours, minutes] = time.split(':').map(Number);
-        const appointmentTime = new Date();
-        appointmentTime.setHours(hours, minutes, 0, 0);
+    function isValidAppointmentDate(date) {
+        // Crear un objeto Date directamente a partir del valor "YYYY-MM-DD"
+        const [year, month, day] = date.split("-"); // Separar el formato YYYY-MM-DD
+        const appointmentDate = new Date(year, month - 1, day); // Crear fecha correcta (meses base 0)
+        
+        const today = new Date();
+        today.setHours(0, 0, 0, 0); // Normalizar "hoy" a medianoche
     
-        const startTime = new Date();
-        startTime.setHours(8, 0, 0, 0);
+        // Validar si la fecha seleccionada es menor que hoy
+        if (appointmentDate < today) {
+            return false;
+        }
     
-        const endTime = new Date();
-        endTime.setHours(19, 0, 0, 0);
+        // Validar si es sábado o domingo
+        const dayOfWeek = appointmentDate.getDay();
+        if (dayOfWeek === 0 || dayOfWeek === 6) {
+            return false;
+        }
     
-        return appointmentTime >= startTime && appointmentTime <= endTime;
+        return true;
     }
+    
+    
     
     function isValidAppointmentTime(time) {
         const [hours, minutes] = time.split(':').map(Number);

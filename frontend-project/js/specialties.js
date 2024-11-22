@@ -119,6 +119,8 @@
     // Cargar las especialidades al iniciar
     fetchSpecialties();
 });*/
+
+
 document.addEventListener('DOMContentLoaded', function () {
     const specialtiesTableBody = document.getElementById('specialtiesTableBody');
     const specialtyForm = document.getElementById('specialtyForm');

@@ -214,6 +214,11 @@ window.editPatient = function(id) {
             alert('El estado civil debe ser uno de los siguientes: CASADO, SOLTERO, DIVORCIADO, VIUDO.');
             return;
         }
+        const validEmail = /\S+@\S+\.\S+/;
+        if(!validEmail.test(correo)){
+            alert('Ingrese un correo valido');
+            return;
+        }
 
         // Crear el cuerpo de la solicitud
         const userData = {

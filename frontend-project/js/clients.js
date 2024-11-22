@@ -41,8 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.error("Error fetching appointments:", error);
             });
     }
-// Mostrar citas en la tabla
-// Mostrar citas en la tabla
+    
 function displayAppointments(appointments) {
     appointmentsTable.innerHTML = ""; // Limpiar filas previas
 

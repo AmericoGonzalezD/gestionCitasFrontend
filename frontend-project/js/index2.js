@@ -51,6 +51,7 @@ document.getElementById("createCitaForm").addEventListener("submit", function (e
     const fecha = document.getElementById("fecha").value;
     const hora = document.getElementById("hora").value;
     const estado = document.getElementById("estado").value;
+    
 
     if (!idCliente || !idPsicologo || !fecha || !hora || !estado) {
         alert("Por favor, complete todos los campos antes de enviar.");
